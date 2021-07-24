@@ -1,0 +1,44 @@
+type 1:
+
+  properties:
+    guid:
+      type : string
+    title : 
+      type : string
+  headers:
+    - text     : guid
+      width    : 10%
+      align    : left
+      sortable : True
+      value    : guid
+
+    - text     : title
+      align    : left
+      sortable : True
+      value    : title
+
+type 2:
+
+  properties : 
+    guid: 
+      type : string
+    title: 
+      type : string
+    price: 
+      type : number
+  headers:
+    - text     : guid
+      width    : 10%
+      align    : left
+      sortable : True
+      value    : guid
+    
+    - text     : title
+      align    : left
+      sortable : True
+      value    : title
+    
+    - text     : price
+      align    : right
+      sortable : True
+      value    : price

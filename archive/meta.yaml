@@ -1,0 +1,22 @@
+- type : type 1
+  guid : 1
+  title : doc 1 of type 1
+
+- type : type 1
+  guid : 2
+  title : doc 2 of type 1
+  
+- type : type 2
+  guid : 3
+  title : doc 3 of type 2
+  price : 123
+  
+- type : type 2
+  guid : 4
+  title : doc 4 of type 2
+  price : 321
+  
+- type : type 2
+  guid : 5
+  title : doc 5 of type 2
+  price : 645
