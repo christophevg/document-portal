@@ -1,6 +1,8 @@
 import logging
 logger = logging.getLogger(__name__)
 
+import os
+
 from flask import request, send_from_directory
 from flask_restful import Resource
 
