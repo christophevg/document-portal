@@ -1,7 +1,7 @@
 all: run
 
 run:
-	gunicorn -k eventlet -w 1 doc:server
+	gunicorn -k eventlet -w 1 run:server
 
 
 

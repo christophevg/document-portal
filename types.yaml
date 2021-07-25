@@ -1,12 +1,32 @@
 # each document type defines all of its properties with a type and lists its 
 # headers along with its UI configuration
 
+all:
+  headers:
+    - text     : guid
+      width    : 10%
+      align    : left
+      sortable : True
+      value    : guid
+
+    - text     : title
+      align    : left
+      sortable : True
+      value    : title
+
+    - text     : type
+      align    : left
+      sortable : True
+      value    : type
+
 type 1:
 
   properties:
     guid:
       type     : string
     title: 
+      type     : string
+    category:
       type     : string
   headers:
     - text     : guid
@@ -24,11 +44,13 @@ type 2:
 
   properties: 
     guid: 
-      type : string
+      type     : string
     title: 
-      type : string
+      type     : string
     price: 
-      type : number
+      type     : money
+    category:
+      type     : string
   headers:
     - text     : guid
       width    : 10%
@@ -45,3 +67,31 @@ type 2:
       align    : right
       sortable : True
       value    : price
+
+type 3:
+
+  properties: 
+    guid: 
+      type     : string
+    title: 
+      type     : string
+    category:
+      type     : string
+    related:
+      type     : guids
+  headers:
+    - text     : guid
+      width    : 10%
+      align    : left
+      sortable : True
+      value    : guid
+    
+    - text     : title
+      align    : left
+      sortable : True
+      value    : title
+    
+    - text     : related
+      align    : center
+      sortable : false
+      value    : related

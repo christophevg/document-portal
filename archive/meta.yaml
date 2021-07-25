@@ -1,22 +1,36 @@
-- type : type 1
-  guid : 1
+- type  : type 1
+  guid  : 1
+  owner : x
+  code  : abc
   title : doc 1 of type 1
+  category: cat 1
 
 - type : type 1
   guid : 2
+  owner: x
+  code  : xyz
   title : doc 2 of type 1
+  category: cat 1
   
 - type : type 2
   guid : 3
+  owner: x
   title : doc 3 of type 2
   price : 123
+  category: cat 2
   
 - type : type 2
   guid : 4
+  owner: y
   title : doc 4 of type 2
   price : 321
+  category: cat 2
   
-- type : type 2
+- type : type 3
   guid : 5
-  title : doc 5 of type 2
-  price : 645
+  owner: x
+  title : doc 5 of type 3
+  related:
+    - 1
+    - 2
+  category: cat 2

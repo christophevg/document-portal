@@ -1,1 +1,1 @@
-import doc.portal.ui
+import doc.portal.viewer

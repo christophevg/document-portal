@@ -166,11 +166,31 @@ store.registerModule("Viewer", {
   actions: {
     handleTypeChange: function(context, type) {
       store.commit("reload");
-      $.get( "/documents?type="+type, function(documents) {
-        store.commit("documents", documents );
+      $.ajax({
+        url: "/documents?type="+type,
+        type: "get",
+        success: function(documents) {
+          console.log(documents);
+          store.commit("documents", documents );
+        },
+        error: function(response) {
+          app.$notify({
+            group: "notifications",
+            title: "Could not fetch documents...",
+            text:  response.responseText,
+            type:  "warn",
+            duration: 10000
+          });
+        }
       });
     }
   }
+});
+
+// log to console setup
+
+socket.on("log", function(msg){
+  console.log(msg);
 });
 
 // load types to populate menu
