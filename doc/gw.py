@@ -9,7 +9,6 @@ from flask_restful import Resource
 import requests
 
 from baseweb.rest import api
-from baseweb.socketio import socketio
 
 import util
 
@@ -32,7 +31,8 @@ api.add_resource(HandleMetaTypes, "/meta/types")
 def fetch(session, path, params):
   base_url = os.environ.get("ARCHIVE_URL", "http://localhost:8000/archive/search/")
   url = base_url + path + "?" + "&".join([ "{}={}".format(k,v) for k,v in params.items()])
-  socketio.emit("log", url)
+  util.log2browser( "GW", "dispatching archive API query", url)
+
   with session.get(base_url + path, params=params) as response:
     data = response.json()
     if response.status_code != 200:
@@ -53,13 +53,20 @@ def generate_queries(args):
   """
   given a set of arguments, generate query paths including category and index
   """
+  
+  util.log2browser(
+    "GW",
+    "handling document request",
+    args
+  )
+  
   ts = extract_as_list(args, "type")
   if "all" in ts:
     ts.remove("all")
   if ts:
     args["type"] = ts
   cats = extract_as_list(args, "category")
-  
+    
   if not cats:
     # determine category/ies depending on types (if provided)
     if ts:

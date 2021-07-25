@@ -1,11 +1,3 @@
-var Welcome = {
-  template: `
-<div>
-  <h1>Welcome</h1>
-</div>
-`
-};
-
 var Viewer = {
   template : `
  <v-card>
@@ -150,23 +142,15 @@ function add_type(type) {
   });
 }
 
-// set up page specific part in the store
+// set up viewer specific part in the store
 
 store.registerModule("Viewer", {
   state: {
-    log: [],
     types: [],
     documents: [],
     loading: false
   },
   mutations: {
-    log: function(state, msg) {
-      now = Date.now()
-      msg["log"]["commit"] = now;
-      msg["log"]["received"] = Math.round(msg["log"]["received"] + state.skew);
-      msg["elapsed"] = now - msg["log"]["received"];
-      state.log.unshift({ when: new Date(), body: msg });
-    },
     types: function(state, types) {
       state.types = types;
       for( var type in types ) {
@@ -189,9 +173,6 @@ store.registerModule("Viewer", {
     }
   },
   getters: {
-    logs: function(state) {
-      return state.log;
-    },
     headers: function(state) {
       return function(type) {
         return state.types[type]["headers"];
@@ -226,12 +207,6 @@ store.registerModule("Viewer", {
       });
     }
   }
-});
-
-// log to console setup
-
-socket.on("log", function(msg){
-  console.log(msg);
 });
 
 // load types to populate menu
