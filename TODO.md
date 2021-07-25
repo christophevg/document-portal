@@ -5,7 +5,7 @@
 [   ] implement authentication + acl endpoint
 [   ] introduce status + update capability
 [   ] apply properties typing info (string, guids,...)
-[   ] implement selection of documents
+[ x ] implement selection of documents
 [ x ] implement PDF merge on archive
 [   ] add more and meaningful example documents
 [   ] clean up navigation (add hierarchy)

@@ -4,6 +4,11 @@ var Viewer = {
     <v-card-title>
       My Documents
       <v-spacer></v-spacer>
+      <v-btn small color="primary" dark
+             :disabled="!ready4merge"
+             :href="'/archive/document/' + (selected.map(function(s) { return s.guid;})).join(',')"
+             target="_blank">Download All Selected</v-btn>
+      <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
         append-icon="search"
@@ -13,6 +18,8 @@ var Viewer = {
       ></v-text-field>
     </v-card-title>
   <v-data-table
+    v-model="selected"
+    item-key="guid"
     :headers="headers"
     :items="documents"
     :items-per-page="5"
@@ -71,18 +78,23 @@ var Viewer = {
     documents : function() {
       return store.getters.documents;
     },
-    download: function() {
-      return function(guid) {
-        return "/documents/" + guid;
-      }
-    },
     loading: function() {
       return store.getters.loading;
+    },
+    ready4merge: function() {
+      return this.selected.length > 0;
     }
   },
   data: function() {
     return {
-      search: ''
+      search: "",
+      selected: []
+    }
+  },
+  methods: {
+    toggleAll () {
+      if (this.selected.length) this.selected = []
+      else this.selected = this.desserts.slice()
     }
   },
   // initial selection
