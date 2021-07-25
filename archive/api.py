@@ -2,9 +2,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 import os
+import io
 
-from flask import request, send_from_directory
+from flask import request, send_from_directory, send_file
 from flask_restful import Resource
+
+from PyPDF2 import PdfFileMerger
 
 from baseweb.rest import api
 
@@ -32,6 +35,22 @@ api.add_resource(HandleSearch, "/archive/search/<string:category>/<string:index_
 
 class HandleDocument(Resource):
   def get(self, guid):
-    return send_from_directory(PATH, guid + ".pdf")
+    if "," in guid:
+      guids = guid.split(",")
+      merger = PdfFileMerger()
+      for guid in guids:
+        merger.append(os.path.join(PATH, guid + ".pdf"))
+      buf = io.BytesIO()
+      merger.write(buf)
+      merger.close()   
+      buf.seek(0)
+      return send_file(
+        buf,
+        as_attachment=False,
+        attachment_filename="all.pdf",
+        mimetype="application/pdf"
+      )
+    else:
+      return send_from_directory(PATH, guid + ".pdf")
 
 api.add_resource(HandleDocument, "/archive/document/<string:guid>")
