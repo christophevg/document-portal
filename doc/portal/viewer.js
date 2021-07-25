@@ -7,7 +7,10 @@ var Viewer = {
       <v-btn small color="primary" dark
              :disabled="!ready4merge"
              :href="'/archive/document/' + (selected.map(function(s) { return s.guid;})).join(',')"
-             target="_blank">Download All Selected</v-btn>
+             target="_blank">
+        <v-icon dark left>cloud_download</v-icon>
+        Download All Selected
+      </v-btn>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
