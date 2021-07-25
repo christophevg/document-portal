@@ -52,8 +52,6 @@ def generate_queries(args):
   ts = extract_as_list(args, "type")
   if "all" in ts:
     ts.remove("all")
-  if ts:
-    args["type"] = ts
   cats = extract_as_list(args, "category")
     
   if not cats:
@@ -82,7 +80,12 @@ def generate_queries(args):
       index_values = acl["x"][index]
 
     for value in index_values:
-      yield "{}/{}/{}".format(c, index, value), args
+      if ts:
+        for t in ts:
+          args["type"] = t
+          yield "{}/{}/{}".format(c, index, value), args
+      else:
+        yield "{}/{}/{}".format(c, index, value), args
 
 async def fetch_url(session, path, params):
   base_url = os.environ.get("ARCHIVE_URL", "http://localhost:8000/archive/search/")
