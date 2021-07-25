@@ -6,7 +6,8 @@ import os
 from flask import request, send_from_directory
 from flask_restful import Resource
 
-import requests
+import asyncio
+import aiohttp
 
 from baseweb.rest import api
 
@@ -27,18 +28,6 @@ class HandleMetaTypes(Resource):
     return types
 
 api.add_resource(HandleMetaTypes, "/meta/types")
-
-def fetch(session, path, params):
-  base_url = os.environ.get("ARCHIVE_URL", "http://localhost:8000/archive/search/")
-  url = base_url + path + "?" + "&".join([ "{}={}".format(k,v) for k,v in params.items()])
-  util.log2browser( "GW", "dispatching archive API query", url)
-
-  with session.get(base_url + path, params=params) as response:
-    data = response.json()
-    if response.status_code != 200:
-      logger.error("{}".format(url))
-      return []
-    return data
 
 def extract_as_list(args, key, pop=True):
   if pop:
@@ -94,14 +83,30 @@ def generate_queries(args):
 
     for value in index_values:
       yield "{}/{}/{}".format(c, index, value), args
-      
+
+async def fetch_url(session, path, params):
+  base_url = os.environ.get("ARCHIVE_URL", "http://localhost:8000/archive/search/")
+  url = base_url + path + "?" + "&".join([ "{}={}".format(k,v) for k,v in params.items()])
+  util.log2browser( "GW", "dispatching archive API query", url)
+
+  response = await session.get(base_url + path, params=params)
+  if response.status != 200:
+    logger.error("{}".format(url))
+    return []
+  result = await response.json()
+  return result
+
+async def perform_all_queries(args):
+  async with aiohttp.ClientSession() as session:
+    tasks = []
+    for path, params in generate_queries(args):
+      task = asyncio.create_task(fetch_url(session, path, params))
+      tasks.append(task)
+    results = await asyncio.gather(*tasks)
+  return [ doc for resultset in results for doc in resultset ]
+    
 class HandleDocuments(Resource):
   def get(self):
-    results = []
-    # TODO make async
-    with requests.Session() as session:
-      for path, params in generate_queries(request.args.copy()):
-        results += fetch(session, path, params)
-    return results
+    return asyncio.run(perform_all_queries(request.args.copy()))
 
 api.add_resource(HandleDocuments, "/documents")

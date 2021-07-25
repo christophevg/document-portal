@@ -7,7 +7,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-LOG_LEVEL = os.environ.get("LOG_LEVEL") or "DEBUG"
+LOG_LEVEL = os.environ.get("LOG_LEVEL") or "INFO"
 
 # setup logging infrastructure
 
