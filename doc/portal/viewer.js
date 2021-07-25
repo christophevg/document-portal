@@ -1,3 +1,11 @@
+var Welcome = {
+  template: `
+<div>
+  <h1>Welcome</h1>
+</div>
+`
+};
+
 var Viewer = {
   template : `
  <v-card>
@@ -112,12 +120,30 @@ var Viewer = {
   } 
 };
 
+app.sections.push({
+  icon : "home",
+  text : "Dashboard",
+  path : "/"
+});
+
+router.addRoutes([
+  { path: "/", component: Welcome }
+])
+
+typesSection = {
+  group      : true,
+  icon       : "folder",
+  text       : "My Documents",
+  subsections: []
+}
+app.sections.push(typesSection);
+
 function add_type(type) {
   // add route and navigation entry
   router.addRoutes([
-    { path: "/"+ type, component: Viewer },
+    { path: "/"+ type, component: Viewer }
   ])
-  app.sections.push({
+  typesSection.subsections.push({
     icon  : "description",
     text  : type,
     path  : "/" + type   

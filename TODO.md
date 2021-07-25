@@ -8,10 +8,10 @@
 [ x ] implement selection of documents
 [ x ] implement PDF merge on archive
 [   ] add more and meaningful example documents
-[   ] clean up navigation (add hierarchy)
+[ x ] clean up navigation (add hierarchy)
 [   ] add search capabilities (aka construct custom query arguments)
-[   ] add welcome page
 [   ] add creation/update timestamp attributes + query on "last week"
+[   ] extend welcome page to dashboard with "new" documents
 
 ## DOC GW v1: search and update
 
