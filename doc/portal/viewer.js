@@ -33,7 +33,7 @@ var Viewer = {
         {{ props.item[prop] }}
       </td>
       <td align="right" width="1%">
-        <v-btn icon :href="'/documents/' + props.item.guid" target="_blank">
+        <v-btn icon :href="'/archive/document/' + props.item.guid" target="_blank">
           <v-icon>description</v-icon>
         </v-btn>
         </td>
