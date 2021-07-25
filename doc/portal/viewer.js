@@ -2,7 +2,7 @@ var Viewer = {
   template : `
  <v-card>
     <v-card-title>
-      My Documents
+      <h1>My {{ scope }} Documents</h1>
       <v-spacer></v-spacer>
       <v-btn small color="primary" dark
              :disabled="!ready4merge"
@@ -52,6 +52,10 @@ var Viewer = {
 </v-card>
 `,
   computed: {
+    scope: function() {
+      var s = this.$route.path.slice(1);
+      return s == "all" ? "" : s;
+    },
     headers: function() {
       var heads = store.getters.headers(this.$route.path.slice(1));
       return heads.concat({ text: "", align:"center", value: 'name', sortable: false });
@@ -192,7 +196,6 @@ store.registerModule("Viewer", {
         url: "/documents?type="+type,
         type: "get",
         success: function(documents) {
-          console.log(documents);
           store.commit("documents", documents );
         },
         error: function(response) {
