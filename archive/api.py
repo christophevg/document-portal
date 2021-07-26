@@ -31,7 +31,7 @@ class HandleSearch(Resource):
     args[index_name] = index_value
     return find_documents(args)
 
-api.add_resource(HandleSearch, "/archive/search/<string:category>/<string:index_name>/<string:index_value>")
+api.add_resource(HandleSearch, "/archive/v1/<string:category>/list/<string:index_name>/<string:index_value>")
 
 class HandleDocument(Resource):
   def get(self, guid):

@@ -83,12 +83,12 @@ def generate_queries(args):
       if ts:
         for t in ts:
           args["type"] = t
-          yield "{}/{}/{}".format(c, index, value), args
+          yield "{}/list/{}/{}".format(c, index, value), args
       else:
-        yield "{}/{}/{}".format(c, index, value), args
+        yield "{}/list/{}/{}".format(c, index, value), args
 
 async def fetch_url(session, path, params):
-  base_url = os.environ.get("ARCHIVE_URL", "http://localhost:8000/archive/search/")
+  base_url = os.environ.get("ARCHIVE_URL", "http://localhost:8000/archive/v1/")
   url = base_url + path + "?" + "&".join([ "{}={}".format(k,v) for k,v in params.items()])
   util.log2browser( "GW", "dispatching archive API query", url)
 
