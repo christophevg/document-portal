@@ -2,6 +2,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 import os
+import time
 
 from flask import request, send_from_directory
 from flask_restful import Resource
@@ -110,6 +111,9 @@ async def perform_all_queries(args):
     
 class HandleDocuments(Resource):
   def get(self):
-    return asyncio.run(perform_all_queries(request.args.copy()))
+    start = time.time()
+    result = asyncio.run(perform_all_queries(request.args.copy()))
+    util.log2browser( "GW", "external calls", time.time()-start)
+    return result
 
 api.add_resource(HandleDocuments, "/documents")
