@@ -117,3 +117,11 @@ class HandleDocuments(Resource):
     return result
 
 api.add_resource(HandleDocuments, "/documents")
+
+class HandleRTTTest(Resource):
+  def get(self):
+    start = time.time()
+    util.log2browser( "GW", "external calls", time.time()-start)
+    return time.time()-start
+
+api.add_resource(HandleRTTTest, "/rtt")

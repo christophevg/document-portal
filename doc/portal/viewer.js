@@ -230,3 +230,22 @@ $.ajax({
     });
   }
 });
+
+// perform RRT test
+
+$.ajax({
+  url: "/rtt",
+  type: "get",
+  success: function(response) {
+    console.log("rrt performed", response);
+  },
+  error: function(response) {
+    app.$notify({
+      group: "notifications",
+      title: "Could not perform RTT Test...",
+      text:  response.responseText,
+      type:  "warn",
+      duration: 10000
+    });
+  }
+});
